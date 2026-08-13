@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numero Desordonner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Écran de sélection de joueur -->
+    <div id="playerSelectionScreen" class="screen active">
+        <div class="container">
+            <h1>Numero Desordonner</h1>
+            <p class="subtitle">Sélectionne un mode de jeu</p>
+            <div class="buttons-container">
+                <button class="btn btn-primary" onclick="selectGameMode('player')">
+                    🎮 Joueur vs Joueur
+                </button>
+                <button class="btn btn-secondary" onclick="selectGameMode('ai')">
+                    🤖 Joueur vs Ordinateur
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de configuration -->
+    <div id="configScreen" class="screen">
+        <div class="container">
+            <h1>Configuration du jeu</h1>
+            
+            <div class="config-section">
+                <label for="timeInput">Temps imparti (secondes):</label>
+                <input type="number" id="timeInput" min="10" max="300" value="60">
+            </div>
+
+            <div class="config-section">
+                <label for="difficultySelect">Difficulté:</label>
+                <select id="difficultySelect">
+                    <option value="easy">Facile (20 cubes)</option>
+                    <option value="normal" selected>Normal (16 cubes)</option>
+                    <option value="hard">Difficile (12 cubes)</option>
+                </select>
+            </div>
+
+            <div class="config-section" id="playerNamesSection">
+                <label for="player1Name">Nom du joueur 1:</label>
+                <input type="text" id="player1Name" placeholder="Joueur 1" value="Joueur 1">
+                
+                <label for="player2Name" id="player2Label">Nom du joueur 2:</label>
+                <input type="text" id="player2Name" placeholder="Joueur 2" value="Joueur 2">
+            </div>
+
+            <div class="buttons-container">
+                <button class="btn btn-secondary" onclick="goBackToSelection()">Retour</button>
+                <button class="btn btn-primary" onclick="startGame()">Commencer le jeu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran de jeu -->
+    <div id="gameScreen" class="screen">
+        <div class="game-header">
+            <div class="player-info">
+                <h2 id="currentPlayerName">Joueur 1</h2>
+                <p id="playerTurn">À toi de jouer!</p>
+            </div>
+            <div class="game-stats">
+                <div class="stat">
+                    <span class="stat-label">Temps:</span>
+                    <span class="stat-value" id="timer">60</span>s
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Score:</span>
+                    <span class="stat-value" id="score">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-container">
+            <!-- Cubes empilés (pile) -->
+            <div class="cubes-stack">
+                <h3>Cubes à placer</h3>
+                <div class="stack-display">
+                    <div id="currentCube" class="cube cube-current"></div>
+                    <div class="stack-counter">
+                        <span id="stackCount">16</span> cubes restants
+                    </div>
+                </div>
+            </div>
+
+            <!-- Casier avec emplacements -->
+            <div class="locker">
+                <h3>Casier</h3>
+                <div class="locker-grid" id="lockerGrid"></div>
+            </div>
+        </div>
+
+        <div class="game-footer">
+            <button class="btn btn-secondary" onclick="pauseGame()">Pause</button>
+            <button class="btn btn-danger" onclick="quitGame()">Quitter</button>
+        </div>
+    </div>
+
+    <!-- Écran Game Over -->
+    <div id="gameOverScreen" class="screen">
+        <div class="container">
+            <h1 id="gameOverTitle">Temps écoulé!</h1>
+            <div class="game-over-content">
+                <div id="resultContent"></div>
+                <div class="final-scores" id="finalScores"></div>
+            </div>
+            <div class="buttons-container">
+                <button class="btn btn-secondary" onclick="goBackToSelection()">Retour au menu</button>
+                <button class="btn btn-primary" onclick="restartGame()">Rejouer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Écran Pause -->
+    <div id="pauseScreen" class="screen">
+        <div class="pause-overlay">
+            <div class="pause-content">
+                <h2>Jeu en pause</h2>
+                <div class="buttons-container">
+                    <button class="btn btn-primary" onclick="resumeGame()">Continuer</button>
+                    <button class="btn btn-secondary" onclick="quitGame()">Quitter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
